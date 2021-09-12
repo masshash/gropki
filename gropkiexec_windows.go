@@ -15,7 +15,7 @@ func (gc *gropkiCmd) start() error {
 	if err := gc.Cmd.Start(); err != nil {
 		return err
 	}
-	gc.ProcessGroup = &processGroup{parentProc: gc.Process, jobHandle: 0}
+	gc.ProcessGroup = &processGroup{parentProcess: gc.Process, jobHandle: 0}
 
 	procHandle, err := windows.OpenProcess(accessRight_PROCESS_SET_QUOTA|accessRight_PROCESS_TERMINATE, false, uint32(gc.Process.Pid))
 	if err != nil {

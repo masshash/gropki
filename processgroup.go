@@ -5,14 +5,14 @@ import (
 )
 
 type processGroup struct {
-	parentProc *os.Process
-	err        error
+	parentProcess *os.Process
+	err           error
 
 	jobHandle uintptr
 }
 
 func (pg *processGroup) Release() error {
-	pg.parentProc.Release()
+	pg.parentProcess.Release()
 	return pg.release()
 }
 
