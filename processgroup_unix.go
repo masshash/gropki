@@ -13,12 +13,12 @@ func (pg *processGroup) release() error {
 }
 
 func (pg *processGroup) signal(sig os.Signal) error {
-	if pg.parentProc.Pid == -1 {
+	if pg.parentProcess.Pid == -1 {
 		return errors.New("gropki: process already released")
 	}
 	s, ok := sig.(syscall.Signal)
 	if !ok {
 		return errors.New("gropki: unsupported signal type")
 	}
-	return syscall.Kill(-pg.parentProc.Pid, s)
+	return syscall.Kill(-pg.parentProcess.Pid, s)
 }
