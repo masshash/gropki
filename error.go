@@ -23,7 +23,7 @@ func NewError(message string) error {
 	return newerr(message, nil)
 }
 
-func NewErrorWithWinSyscall(apiName string, syserr error) error {
-	msg := fmt.Sprintf("Windows system call [%s]: %s", apiName, syserr.Error())
+func NewSyscallError(syscall string, syserr error) error {
+	msg := fmt.Sprintf("system call error [%s]: %s", syscall, syserr.Error())
 	return newerr(msg, syserr)
 }
