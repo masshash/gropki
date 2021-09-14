@@ -14,7 +14,7 @@ func (gc *gropkiCmd) start() error {
 	if err := gc.Cmd.Start(); err != nil {
 		return err
 	}
-	gc.ProcessGroup = &processGroup{parentProcess: gc.Process}
+	gc.ProcessGroup = &processGroup{parentProcess: gc.Process, pgid: gc.Process.Pid}
 
 	return nil
 }

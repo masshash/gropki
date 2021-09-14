@@ -8,6 +8,7 @@ type processGroup struct {
 	parentProcess *os.Process
 	err           error
 
+	pgid      int
 	jobHandle uintptr
 }
 
