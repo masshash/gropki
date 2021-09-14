@@ -8,10 +8,20 @@ import (
 	"golang.org/x/sys/windows"
 )
 
-func (pg *processGroup) release() error {
-	jobHandle := windows.Handle(pg.jobHandle)
+func checkValidJobHandle(jobHandle windows.Handle) error {
 	if jobHandle == windows.InvalidHandle {
 		return errors.New("gropki: process already released")
+	}
+	if jobHandle == NULL {
+		return errors.New("gropki: process not initialized")
+	}
+	return nil
+}
+
+func (pg *processGroup) release() error {
+	jobHandle := windows.Handle(pg.jobHandle)
+	if err := checkValidJobHandle(jobHandle); err != nil {
+		return err
 	}
 	if err := windows.CloseHandle(jobHandle); err != nil {
 		return err
@@ -23,11 +33,8 @@ func (pg *processGroup) release() error {
 
 func (pg *processGroup) signal(sig os.Signal) error {
 	jobHandle := windows.Handle(pg.jobHandle)
-	if jobHandle == windows.InvalidHandle {
-		return errors.New("gropki: process already released")
-	}
-	if pg.err != nil {
-		return pg.err
+	if err := checkValidJobHandle(jobHandle); err != nil {
+		return err
 	}
 	if sig != os.Kill {
 		return errors.New("gropki: unsupported signal type")

@@ -8,17 +8,24 @@ import (
 	"syscall"
 )
 
-func (pg *processGroup) release() error {
-	if pg.pgid == -1 {
+func checkValidPgid(pgid int) error {
+	if pgid == -1 {
 		return errors.New("gropki: process already released")
+	}
+	return nil
+}
+
+func (pg *processGroup) release() error {
+	if err := checkValidPgid(pg.pgid); err != nil {
+		return err
 	}
 	pg.pgid = -1
 	return nil
 }
 
 func (pg *processGroup) signal(sig os.Signal) error {
-	if pg.pgid == -1 {
-		return errors.New("gropki: process already released")
+	if err := checkValidPgid(pg.pgid); err != nil {
+		return err
 	}
 	s, ok := sig.(syscall.Signal)
 	if !ok {
