@@ -1,29 +1,8 @@
 package gropki
 
-import "fmt"
-
-type GropkiError struct {
-	Msg string
-	Err error
-}
-
-func (gerr *GropkiError) Error() string {
-	return gerr.Msg
-}
-
-func (gerr *GropkiError) Unwrap() error {
-	return gerr.Err
-}
-
-func newerr(message string, err error) error {
-	return &GropkiError{Msg: "gropki: " + message, Err: err}
-}
-
-func NewError(message string) error {
-	return newerr(message, nil)
-}
-
-func NewSyscallError(syscall string, syserr error) error {
-	msg := fmt.Sprintf("system call error [%s]: %s", syscall, syserr.Error())
-	return newerr(msg, syserr)
-}
+const (
+	EMESSAGE_PROCESSGROUP_RELEASED = "process group already released"
+	EMESSAGE_PROCESSGROUP_NOTINIT  = "process group not initialized"
+	EMESSAGE_UNSUPPORTED_PLATFORM  = "unsupported platform"
+	EMESSAGE_UNSUPPORTED_SIGNAL    = "unsupported signal type"
+)
