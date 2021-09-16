@@ -7,5 +7,5 @@ import (
 )
 
 func (gc *GropkiCmd) start() error {
-	return errors.New("gropki: unsupported platform")
+	return errors.New(EMESSAGE_UNSUPPORTED_PLATFORM)
 }

@@ -10,7 +10,7 @@ import (
 
 func checkValidPgid(pgid int) error {
 	if pgid == -1 {
-		return errors.New("gropki: process already released")
+		return errors.New(EMESSAGE_PROCESSGROUP_RELEASED)
 	}
 	return nil
 }
@@ -29,7 +29,7 @@ func (pg *processGroup) signal(sig os.Signal) error {
 	}
 	s, ok := sig.(syscall.Signal)
 	if !ok {
-		return errors.New("gropki: unsupported signal type")
+		return errors.New(EMESSAGE_UNSUPPORTED_SIGNAL)
 	}
 	return syscall.Kill(-pg.pgid, s)
 }

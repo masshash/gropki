@@ -10,10 +10,10 @@ import (
 
 func checkValidJobHandle(jobHandle windows.Handle) error {
 	if jobHandle == windows.InvalidHandle {
-		return errors.New("gropki: process already released")
+		return errors.New(EMESSAGE_PROCESSGROUP_RELEASED)
 	}
 	if jobHandle == NULL {
-		return errors.New("gropki: process not initialized")
+		return errors.New(EMESSAGE_PROCESSGROUP_NOTINIT)
 	}
 	return nil
 }
@@ -37,7 +37,7 @@ func (pg *processGroup) signal(sig os.Signal) error {
 		return err
 	}
 	if sig != os.Kill {
-		return errors.New("gropki: unsupported signal type")
+		return errors.New(EMESSAGE_UNSUPPORTED_SIGNAL)
 	}
 	return windows.TerminateJobObject(jobHandle, 1)
 }

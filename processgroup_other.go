@@ -8,9 +8,9 @@ import (
 )
 
 func (pg *ProcessGroup) release() error {
-	return errors.New("gropki: unsupported platform")
+	return errors.New(EMESSAGE_UNSUPPORTED_PLATFORM)
 }
 
 func (pg *ProcessGroup) signal(sig os.Signal) error {
-	return errors.New("gropki: unsupported platform")
+	return errors.New(EMESSAGE_UNSUPPORTED_PLATFORM)
 }
