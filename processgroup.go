@@ -4,7 +4,7 @@ import (
 	"os"
 )
 
-type processGroup struct {
+type ProcessGroup struct {
 	parentProcess *os.Process
 	err           error
 
@@ -12,19 +12,19 @@ type processGroup struct {
 	jobHandle uintptr
 }
 
-func (pg *processGroup) Release() error {
+func (pg *ProcessGroup) Release() error {
 	pg.parentProcess.Release()
 	return pg.release()
 }
 
-func (pg *processGroup) Signal(sig os.Signal) error {
+func (pg *ProcessGroup) Signal(sig os.Signal) error {
 	return pg.signal(sig)
 }
 
-func (pg *processGroup) Kill() error {
+func (pg *ProcessGroup) Kill() error {
 	return pg.Signal(os.Kill)
 }
 
-func (pg *processGroup) Error() error {
+func (pg *ProcessGroup) Error() error {
 	return pg.err
 }

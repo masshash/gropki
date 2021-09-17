@@ -14,11 +14,11 @@ const (
 	accessRight_PROCESS_TERMINATE = 0x0001
 )
 
-func (gc *gropkiCmd) start() error {
+func (gc *GropkiCmd) start() error {
 	if err := gc.Cmd.Start(); err != nil {
 		return err
 	}
-	gc.ProcessGroup = &processGroup{parentProcess: gc.Process, jobHandle: NULL}
+	gc.ProcessGroup = &ProcessGroup{parentProcess: gc.Process, jobHandle: NULL}
 
 	procHandle, err := windows.OpenProcess(accessRight_PROCESS_SET_QUOTA|accessRight_PROCESS_TERMINATE, false, uint32(gc.Process.Pid))
 	if err != nil {
@@ -40,6 +40,6 @@ func (gc *gropkiCmd) start() error {
 	}
 
 	gc.ProcessGroup.jobHandle = uintptr(jobHandle)
-	runtime.SetFinalizer(gc.ProcessGroup, (*processGroup).Release)
+	runtime.SetFinalizer(gc.ProcessGroup, (*ProcessGroup).Release)
 	return nil
 }

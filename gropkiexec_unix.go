@@ -4,7 +4,7 @@ package gropki
 
 import "syscall"
 
-func (gc *gropkiCmd) start() error {
+func (gc *GropkiCmd) start() error {
 	if gc.Cmd.SysProcAttr != nil {
 		gc.Cmd.SysProcAttr.Setpgid = true
 	} else {
@@ -14,7 +14,7 @@ func (gc *gropkiCmd) start() error {
 	if err := gc.Cmd.Start(); err != nil {
 		return err
 	}
-	gc.ProcessGroup = &processGroup{parentProcess: gc.Process, pgid: gc.Process.Pid}
+	gc.ProcessGroup = &ProcessGroup{parentProcess: gc.Process, pgid: gc.Process.Pid}
 
 	return nil
 }

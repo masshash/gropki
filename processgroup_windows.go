@@ -18,7 +18,7 @@ func checkValidJobHandle(jobHandle windows.Handle) error {
 	return nil
 }
 
-func (pg *processGroup) release() error {
+func (pg *ProcessGroup) release() error {
 	jobHandle := windows.Handle(pg.jobHandle)
 	if err := checkValidJobHandle(jobHandle); err != nil {
 		return err
@@ -31,7 +31,7 @@ func (pg *processGroup) release() error {
 	return nil
 }
 
-func (pg *processGroup) signal(sig os.Signal) error {
+func (pg *ProcessGroup) signal(sig os.Signal) error {
 	jobHandle := windows.Handle(pg.jobHandle)
 	if err := checkValidJobHandle(jobHandle); err != nil {
 		return err

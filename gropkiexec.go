@@ -2,16 +2,16 @@ package gropki
 
 import "os/exec"
 
-type gropkiCmd struct {
+type GropkiCmd struct {
 	*exec.Cmd
-	ProcessGroup *processGroup
+	ProcessGroup *ProcessGroup
 }
 
-func Command(name string, arg ...string) *gropkiCmd {
+func Command(name string, arg ...string) *GropkiCmd {
 	c := exec.Command(name, arg...)
-	return &gropkiCmd{Cmd: c}
+	return &GropkiCmd{Cmd: c}
 }
 
-func (gc *gropkiCmd) Start() error {
+func (gc *GropkiCmd) Start() error {
 	return gc.start()
 }

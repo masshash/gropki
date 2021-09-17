@@ -15,7 +15,7 @@ func checkValidPgid(pgid int) error {
 	return nil
 }
 
-func (pg *processGroup) release() error {
+func (pg *ProcessGroup) release() error {
 	if err := checkValidPgid(pg.pgid); err != nil {
 		return err
 	}
@@ -23,7 +23,7 @@ func (pg *processGroup) release() error {
 	return nil
 }
 
-func (pg *processGroup) signal(sig os.Signal) error {
+func (pg *ProcessGroup) signal(sig os.Signal) error {
 	if err := checkValidPgid(pg.pgid); err != nil {
 		return err
 	}
