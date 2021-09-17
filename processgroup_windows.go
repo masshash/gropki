@@ -24,7 +24,7 @@ func (pg *processGroup) release() error {
 		return err
 	}
 	if err := windows.CloseHandle(jobHandle); err != nil {
-		return err
+		return os.NewSyscallError("CloseHandle", err)
 	}
 	pg.jobHandle = uintptr(windows.InvalidHandle)
 	runtime.SetFinalizer(pg, nil)
@@ -39,5 +39,8 @@ func (pg *processGroup) signal(sig os.Signal) error {
 	if sig != os.Kill {
 		return errors.New(EMESSAGE_UNSUPPORTED_SIGNAL)
 	}
-	return windows.TerminateJobObject(jobHandle, 1)
+	if err := windows.TerminateJobObject(jobHandle, 1); err != nil {
+		return os.NewSyscallError("TerminateJobObject", err)
+	}
+	return nil
 }
